@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zawhtetnaing.charleskeith.zhn.R;
+import com.zawhtetnaing.charleskeith.zhn.data.vos.NewProductsVO;
 import com.zawhtetnaing.charleskeith.zhn.delegates.ProductDelegate;
+import com.zawhtetnaing.charleskeith.zhn.utils.GlideApp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +34,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
     private boolean mIsDoubleColumn;
     private ProductDelegate mProductDelegate;
+    private NewProductsVO mNewProduct;
 
     public ProductViewHolder(View itemView, boolean isDoubleColumn, final ProductDelegate productDelegate) {
         super(itemView);
@@ -45,7 +49,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productDelegate.onTapProduct();
+                productDelegate.onTapProduct(mNewProduct);
             }
         });
     }
@@ -68,7 +72,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         btnNewLabel.getLayoutParams().width = dpToPixel(60, btnNewLabel);
 
         RelativeLayout.LayoutParams tvProductCategoryLayoutParams = (RelativeLayout.LayoutParams) tvProductCategory.getLayoutParams();
-        tvProductCategoryLayoutParams.setMargins(0, dpToPixel(8,tvProductCategory), 0, dpToPixel(32,tvProductCategory));
+        tvProductCategoryLayoutParams.setMargins(0, dpToPixel(8, tvProductCategory), 0, dpToPixel(32, tvProductCategory));
         tvProductCategory.setLayoutParams(tvProductCategoryLayoutParams);
 
     }
@@ -94,6 +98,16 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         tvProductCategoryLayoutParams.setMargins(0, 8, 0, 32);
         tvProductCategory.setLayoutParams(tvProductCategoryLayoutParams);
 
+    }
+
+    public void setmNewProduct(NewProductsVO mNewProduct) {
+        this.mNewProduct = mNewProduct;
+        GlideApp.with(ivProductImage.getContext())
+                .load(mNewProduct.getProductImage())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
+                .into(ivProductImage);
+        tvProductCategory.setText(mNewProduct.getProductTitle());
     }
 
     private int dpToPixel(int i, View view) {

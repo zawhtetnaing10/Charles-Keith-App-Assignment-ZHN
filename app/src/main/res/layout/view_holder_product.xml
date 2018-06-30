@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/fl_product_image_container"
         android:layout_centerHorizontal="true"
+        android:padding="@dimen/margin_medium_2"
         android:text="POINTED FLAT MULES" />
 
 </RelativeLayout>

@@ -7,16 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zawhtetnaing.charleskeith.zhn.R;
+import com.zawhtetnaing.charleskeith.zhn.data.vos.NewProductsVO;
 import com.zawhtetnaing.charleskeith.zhn.delegates.ProductDelegate;
 import com.zawhtetnaing.charleskeith.zhn.viewholders.ProductViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     private boolean isDoubleColumn;
     private ProductDelegate mProductDelegate;
+    private List<NewProductsVO> mNewProducts;
 
     public ProductAdapter(ProductDelegate productDelegate) {
         this.mProductDelegate = productDelegate;
+        mNewProducts = new ArrayList<>();
     }
 
     @NonNull
@@ -30,15 +36,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-
+        holder.setmNewProduct(mNewProducts.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mNewProducts.size();
     }
 
     public void setDoubleColumn(boolean doubleColumn) {
         isDoubleColumn = doubleColumn;
+    }
+
+    public void setmNewProducts(List<NewProductsVO> newProducts) {
+      this.mNewProducts = newProducts;
+        notifyDataSetChanged();
+    }
+
+    public void appendmNewProducts(List<NewProductsVO> newProducts){
+        this.mNewProducts.addAll(newProducts);
+        notifyDataSetChanged();
     }
 }

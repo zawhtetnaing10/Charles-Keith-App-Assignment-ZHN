@@ -120,7 +120,7 @@
                     android:layout_marginBottom="@dimen/margin_medium"
                     android:layout_marginTop="@dimen/margin_medium_2"
                     android:letterSpacing="0.1"
-                    android:text="87 ITEMS" />
+                    tools:text="87 ITEMS" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_product_list"
@@ -131,6 +131,13 @@
             </RelativeLayout>
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/vp_empty"
+            layout="@layout/view_pod_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </FrameLayout>
 
