@@ -47,8 +47,8 @@ public class RetrofitDataAgentImpl implements ProductsDataAgent {
 
     @Override
     public void loadNewProductsList(int page, String accessToken, final boolean isForceRefreshed) {
-        Call<GetNewProductsResponse> loadNewsCall = mApi.loadNewProductsList(accessToken, page);
-        loadNewsCall.enqueue(new Callback<GetNewProductsResponse>() {
+        Call<GetNewProductsResponse> loadNewProductsCall = mApi.loadNewProductsList(accessToken, page);
+        loadNewProductsCall.enqueue(new Callback<GetNewProductsResponse>() {
 
             @Override
             public void onResponse(Call<GetNewProductsResponse> call, Response<GetNewProductsResponse> response) {

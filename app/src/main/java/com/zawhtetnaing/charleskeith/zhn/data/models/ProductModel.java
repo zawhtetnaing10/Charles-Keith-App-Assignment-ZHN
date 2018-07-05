@@ -43,6 +43,7 @@ public class ProductModel {
 
     public void loadNewProductsList() {
         mDataAgent.loadNewProductsList(mPage, DUMMY_ACCESS_TOKEN, false);
+        mPage++;
     }
 
     public void forceRefreshProductList() {
@@ -57,12 +58,11 @@ public class ProductModel {
         mPage++;
     }
 
-
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onSuccessForceRefreshGetNewProducts(SuccessForceRefreshGetNewProductsEvent event) {
         setDataIntoRepository(event.getNewProducts());
+        mPage++;
     }
-
 
     private void setDataIntoRepository(List<NewProductsVO> newProducts) {
         for (NewProductsVO newProduct : newProducts) {

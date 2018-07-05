@@ -37,6 +37,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         holder.setmNewProduct(mNewProducts.get(position));
+
     }
 
     @Override
@@ -46,15 +47,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
 
     public void setDoubleColumn(boolean doubleColumn) {
         isDoubleColumn = doubleColumn;
-    }
-
-    public void setmNewProducts(List<NewProductsVO> newProducts) {
-      this.mNewProducts = newProducts;
         notifyDataSetChanged();
     }
 
-    public void appendmNewProducts(List<NewProductsVO> newProducts){
-        this.mNewProducts.addAll(newProducts);
+    public void setmNewProducts(List<NewProductsVO> newProducts) {
+        mNewProducts = newProducts;
+        notifyDataSetChanged();
+    }
+
+    public void appendmNewProducts(List<NewProductsVO> newProducts) {
+        mNewProducts.addAll(newProducts);
         notifyDataSetChanged();
     }
 }

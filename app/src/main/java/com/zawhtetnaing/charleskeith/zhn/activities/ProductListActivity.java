@@ -79,7 +79,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductDel
                 super.onScrollStateChanged(recyclerView, scrollState);
                 Log.d("", "OnScrollListener : onStateChanged " + scrollState);
                 if (scrollState == RecyclerView.SCROLL_STATE_IDLE
-                        && ((LinearLayoutManager) rvProductList.getLayoutManager()).
+                        && ((GridLayoutManager) rvProductList.getLayoutManager()).
                         findLastCompletelyVisibleItemPosition() == rvProductList.getAdapter().getItemCount() - 1
                         && isListEndReached != true) {
                     isListEndReached = true;
@@ -92,7 +92,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductDel
                 super.onScrolled(recyclerView, dx, dy);
                 int visibleItemCount = rvProductList.getLayoutManager().getChildCount();
                 int totalItemCount = rvProductList.getLayoutManager().getItemCount();
-                int pastVisibleItemCount = ((LinearLayoutManager) rvProductList.getLayoutManager()).findFirstVisibleItemPosition();
+                int pastVisibleItemCount = ((GridLayoutManager) rvProductList.getLayoutManager()).findFirstVisibleItemPosition();
 
                 if ((visibleItemCount + pastVisibleItemCount) < totalItemCount) {
                     isListEndReached = false;
@@ -130,7 +130,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductDel
             isDoubleColumn = false;
             adapter.setDoubleColumn(isDoubleColumn);
             rvProductList.setAdapter(adapter);
-            rvProductList.setLayoutManager(new GridLayoutManager(getApplication(),1));
+            rvProductList.setLayoutManager(new GridLayoutManager(getApplication(), 1));
 
         } else if (view.getId() == R.id.btn_double_column) {
             vUnderlineSingleColumn.setVisibility(View.INVISIBLE);
@@ -158,7 +158,7 @@ public class ProductListActivity extends AppCompatActivity implements ProductDel
     @Override
     public void onTapProduct(NewProductsVO newProduct) {
         Intent intent = new Intent(this, ProductDetailsActivity.class);
-        intent.putExtra(ProductsConstants.PRODUCT_ID_EXTRA,newProduct.getProductId());
+        intent.putExtra(ProductsConstants.PRODUCT_ID_EXTRA, newProduct.getProductId());
         startActivity(intent);
     }
 
@@ -171,17 +171,19 @@ public class ProductListActivity extends AppCompatActivity implements ProductDel
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onSuccessForceRefreshGetNewProducts(SuccessForceRefreshGetNewProductsEvent event){
+    public void onSuccessForceRefreshGetNewProducts(SuccessForceRefreshGetNewProductsEvent event) {
         adapter.setmNewProducts(event.getNewProducts());
         numberOfItems.setText(adapter.getItemCount() + " ITEMS");
         swipeRefreshLayout.setRefreshing(false);
+
+        vpEmpty.setVisibility(View.GONE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onFailureGetNewProducts(APIErrorEvent event) {
         swipeRefreshLayout.setRefreshing(false);
 
-        if(!endOfPage){
+        if (!endOfPage) {
             vpEmpty.setVisibility(View.VISIBLE);
         }
     }
